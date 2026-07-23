@@ -16,6 +16,10 @@
     // Fetch data once on component mount
     onMount(async () => {
        // TODO Fetch meals from the API running on the baseUrl
+      const response = await fetch(baseUrl + "/mensa-garching/today")
+      if (response.ok){
+				meals = await response.json();
+      }
     });
 </script>
 
@@ -30,7 +34,11 @@
             <p>Loading menu items...</p>
         </div>
     {:else}
-       <!-- TODO add food-grid here -->
+       <div class="food-grid">
+           {#each meals as meal }
+               <FoodCard {meal} />
+           {/each}
+       </div>
     {/if}
 
     {#if meals.length === 0 && meals.length > 0}
@@ -39,3 +47,4 @@
         </div>
     {/if}
 </main>
+π
